@@ -1,4 +1,5 @@
 '''
+
 # יוצר מחסנית ״משוכללת״
 [stack, max. depth, init. state, try next level?]
 stack - a simple stack as defined at stack.py

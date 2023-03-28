@@ -1,4 +1,5 @@
 '''
+
 The state is a list of 2 items: the board, the path
 The target for 8-puzzle is: (zero is the hole)
 012
