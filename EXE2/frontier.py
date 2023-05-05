@@ -7,16 +7,31 @@ the right side of index i is in index 2i+2
 '''
 import state
 
+Total_States = 0
+Max_States = 0
+def amount_of_states():
+    return Total_States
+
+def max_states():
+    return Max_States
+
+
 def create(s):
-    return [s]      # returns a priority queue that contains s
+    global Total_States
+    global Max_States
+    Total_States = 0
+    Max_States = 0
+    return [s]
+
 
 def is_empty(f):
-    return f==[]    # returns true iff f is empty list
+    return f==[]    # returns true if f is an empty list
 
-def insert(f, s):
-                    # inserts state s to the frontier
+def insert(f, s):   # inserts state s to the frontier
+
     f.append(s)     # inserts the new state as the last item
     i=len(f)-1      # i gets its value
+
 
     # move the item with smallest value to the root
     while i>0 and val(f[i])<val(f[(i-1)//2]): # while item i's value is smaller than the value of his father, swap!
@@ -25,7 +40,11 @@ def insert(f, s):
         f[i]=f[(i-1)//2]
         f[(i-1)//2]=t
         i=(i-1)//2  # i moves upwards
-
+    global Total_States
+    global Max_States
+    Total_States+=1
+    if len(f)>Max_States:
+        Max_States=len(f)
 def remove(f):      # remove and return the root of f
     if is_empty(f): # underflow
         return 0
@@ -33,6 +52,7 @@ def remove(f):      # remove and return the root of f
     f[0]=f[len(f)-1]    # the last leaf becomes the root
     del f[-1]       # delete the last leaf
     heapify(f,0)    # fixing the heap
+
     return s
 
 def val(s):         # returns path len + heuristic distance from target

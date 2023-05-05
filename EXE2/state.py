@@ -55,5 +55,21 @@ def if_legal(x,m):                  # gets a board and a move and makes the move
         x[z+n]=0
 
 def hdistance(s):                   # the heuristic value of s
-    return 0
+    manhattan_distance = 0
+    puzzle_size = int(math.sqrt(len(s[0])))
+    for d in range(len(s[0])):
+        if s[0][d] != d:
+            manhattan_distance += abs(d%puzzle_size - s[0][d]%puzzle_size) + abs(d//puzzle_size - s[0][d]//puzzle_size)
 
+    return  manhattan_distance
+
+
+
+
+#change the heuristic function to be the sum of the distances of each tile from its place
+'''
+ number_of_tiles_out = 0
+    for i in range(len(s[0])):
+        if s[0][i] != i:
+            number_of_tiles_out += 1 
+'''
