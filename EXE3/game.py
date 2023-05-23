@@ -1,11 +1,11 @@
 import copy
-from random import randint
+import random
 VIC=10**20 #The value of a winning board (for max) 
 LOSS=-VIC #The value of a losing board (for max)
 TIE=0 #The value of a tie
 SIZE=3 #The length of a winning sequence
 COMPUTER=SIZE+1 #Marks the computer's cells on the board
-HUMAN=1 #Marks the human's cells on the board
+HUMAN=1 #Marks the human cells on the board
 
 '''
 The HUMAN can select any number along a horizontal row that the cursor is on
@@ -19,26 +19,44 @@ The state of the game is represented by a list of 4 items:
 4. Next row/col
 '''
 def create(n):
-    # put your code here 
-    
+    board=[] #The board is represented by a list of lists
+    for i in range(n):
+        board+= [[0]*n] #Add an empty row
+    for j in board:
+        for k in range(len(j)):
+            j[k]=random.randint(-10, 10)
+    print("board",board)
+    return [board,0,0,COMPUTER,0] #The starting state of the game
 
 def value(s):
 #Returns the heuristic value of s
-# put your code here
+    if isFinished(s):
+        if s[1]>s[2]:
+            return VIC
+        elif s[1]<s[2]:
+            return LOSS
+        else:
+            return TIE
+    else:
+        if s[1]==s[2]:
+            return 1/VIC
+        return s[1]-s[2]
+
+
 
 
 def printState(s):
 #Prints the board. 
-#If the game ended prints who won.
+#If the game ended, prints who won.
     print(" "*6,end="")
     for c in range(len(s[0])):
         print(" "*(5-len(str(c))),c,end="")
-    print()
+    print("")
     for r in range(len(s[0])):
         print(r,"-"," "*(3-len(str(r))),end="")
         for c in range(len(s[0])):
             print(" "*(5-len(str(s[0][r][c]))),s[0][r][c],end="")
-        print()
+        print("")
     print("COMPUTER=",s[1]," HUMAN=",s[2])
     print("Take from row ",s[4])
     if value(s)==VIC:
@@ -52,12 +70,12 @@ def isFinished(s):
 #Returns True iff the game ended
     if s[3]==HUMAN:
         for i in range(len(s[0])):
-           if s[0][s[4]][i]!=None:
+           if s[0][s[4]][i] is not None:
                return False
         return True
     else:
         for i in range(len(s[0])):
-           if s[0][i][s[4]]!=None:
+           if s[0][i][s[4]] is not None:
                return False
         return True
     
@@ -91,8 +109,8 @@ def inputMove(s):
     flag=True
     while flag:
         move=int(input("Enter your next move: "))
-        if move<0 or move>=len(s[0]) or s[0][s[4]][move]==None:
-            print("Ilegal move.")
+        if move<0 or move>=len(s[0]) or s[0][s[4]][move] is None:
+            print("Illegal move.")
         else:
             flag=False
             makeMove(s,s[4],move)
@@ -102,13 +120,13 @@ def getNext(s):
     ns=[]
     if s[3]==HUMAN:
         for i in range(len(s[0])):
-            if s[0][s[4]][i]!=None:
+            if s[0][s[4]][i] is not None:
                 tmp=copy.deepcopy(s)
                 makeMove(tmp,s[4],i)
                 ns+=[tmp]
     else:
         for i in range(len(s[0])):
-            if s[0][i][s[4]]!=None:
+            if s[0][i][s[4]] is not None:
                 tmp=copy.deepcopy(s)
                 makeMove(tmp,i,s[4])
                 ns+=[tmp]

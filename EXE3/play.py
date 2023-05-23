@@ -1,7 +1,7 @@
 import alphaBetaPruning
 import game
-
-board=game.create(4)
+board_size=int(input("Enter board size: "))
+board=game.create(board_size)
 game.whoIsFirst(board)
 while not game.isFinished(board):
     if game.isHumTurn(board):
