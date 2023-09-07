@@ -6,4 +6,4 @@ EXE2  - A* search - n*n puzzle with Manhattan distance heuristics.
 
 EXE3 - MaxIt game realization by alphaBetaPruning algorithm.
 
-EXE3 - Classification and regression
+EXE4 - Classification and regression
